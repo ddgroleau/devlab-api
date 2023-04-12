@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
         <PackageReference Include="Serilog" Version="3.0.0-dev-01958" />
         <PackageReference Include="Serilog.AspNetCore" Version="6.1.1-dev-00295" />
         <PackageReference Include="Serilog.Sinks.File" Version="5.0.1-dev-00947" />
@@ -15,11 +16,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
+      <ProjectReference Include="..\Core\Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Core\Core.csproj" />
+      <Folder Include="Controllers" />
     </ItemGroup>
 
 </Project>
