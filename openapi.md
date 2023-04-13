@@ -1,13 +1,6 @@
-# DevLab API
-A simple REST API for the DevLab question & answer game.
+<!-- Generator: Widdershins v4.0.1 -->
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
-<h1 id="webapi">Open API Documentation</h1>
-
-Reference: [openapis.org](https://www.openapis.org/)
+<h1 id="webapi">WebApi v1.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
