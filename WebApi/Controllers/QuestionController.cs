@@ -59,11 +59,12 @@ namespace devlab_api.Controllers
         }
         
         [HttpGet("questions")]
-        public async Task<IActionResult> GetQuestions(int categoryId, string difficultyId, List<int> tagIds)
+        public async Task<IActionResult> GetQuestions(int category, string difficulty, string tags)
         {
             try
             {
-                return Ok(await _questionService.GetQuestions(categoryId,difficultyId,tagIds));
+                List<int> tagIds = string.IsNullOrWhiteSpace(tags) ? new() : tags.Split(",").Select(t => Convert.ToInt32(t)).ToList();
+                return Ok(await _questionService.GetQuestions(category,difficulty,tagIds));
             }
             catch (Exception e)
             {
