@@ -10,5 +10,5 @@ public interface IQuestionService
 
     Task<List<Tag>> GetTags(int? categoryId, string? difficultyId);
 
-    Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<string> tags);
+    Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<int> tagIds);
 }

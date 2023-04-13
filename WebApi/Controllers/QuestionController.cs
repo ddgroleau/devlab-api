@@ -19,25 +19,57 @@ namespace devlab_api.Controllers
         [HttpGet("difficulties")]
         public async Task<IActionResult> GetDifficulties()
         {
-            return Ok();
+            try
+            {
+                return Ok(await _questionService.GetDifficulties());
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception thrown at QuestionController:GetDifficulties, Message: {0}",e.Message);
+                return BadRequest();
+            }
         }
         
         [HttpGet("categories")]
         public async Task<IActionResult> GetCategories()
         {
-            return Ok();
+            try
+            {
+                return Ok(await _questionService.GetCategories());
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception thrown at QuestionController:GetCategories, Message: {0}",e.Message);
+                return BadRequest();
+            }
         }
         
         [HttpGet("tags")]
         public async Task<IActionResult> GetTags(int? categoryId, string? difficultyId)
         {
-            return Ok();
+            try
+            {
+                return Ok(await _questionService.GetTags(categoryId,difficultyId));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception thrown at QuestionController:GetTags, Message: {0}",e.Message);
+                return BadRequest();
+            }
         }
         
         [HttpGet("questions")]
-        public async Task<IActionResult> GetQuestions(int categoryId, string difficultyId, List<string> tags)
+        public async Task<IActionResult> GetQuestions(int categoryId, string difficultyId, List<int> tagIds)
         {
-            return Ok();
+            try
+            {
+                return Ok(await _questionService.GetQuestions(categoryId,difficultyId,tagIds));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception thrown at QuestionController:GetQuestions, Message: {0}",e.Message);
+                return BadRequest();
+            }
         }
     }
 }

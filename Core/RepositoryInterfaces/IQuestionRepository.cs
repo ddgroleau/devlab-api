@@ -8,7 +8,7 @@ public interface IQuestionRepository
 
     Task<List<Category>> GetCategories();
 
-    Task<List<Tag>> GetTags(int? categoryId, int? difficultyId);
+    Task<List<Tag>> GetTags(int? categoryId, string? difficultyId);
 
-    Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<string> tags);
+    Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<int> tagIds);
 }

@@ -32,18 +32,18 @@ public class QuestionServiceTests
         Assert.That(await _questionService.GetCategories(), Is.Not.Empty);
     }
 
-    [TestCase(0, "easy", "")]
-    [TestCase(1, "", "")]
-    [TestCase(1, null, "")]
+    [TestCase(0, "easy", "0")]
+    [TestCase(1, "", "0")]
+    [TestCase(1, null, "0")]
     public void GetQuestions_WithInvalidArguments_ReturnsEmptyCategoriesList(int categoryId, string difficultyId,
         string tags) =>
-        Assert.ThrowsAsync<ArgumentException>(async ()=> await _questionService.GetQuestions(categoryId, difficultyId, tags.Split(",").ToList()));
+        Assert.ThrowsAsync<ArgumentException>(async ()=> await _questionService.GetQuestions(categoryId, difficultyId, tags.Split(",").Select(t=>int.Parse(t)).ToList()));
     
     [Test]
     public async Task GetQuestions_WithValidArguments_ReturnsList()
     {
-        _questionRepository.GetQuestions(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<List<string>>())
+        _questionRepository.GetQuestions(Arg.Any<int>(), Arg.Any<string>(), Arg.Any<List<int>>())
             .Returns(Task.FromResult(new List<Question> { new Question() }));
-        Assert.That(await _questionService.GetQuestions(1,"easy",new List<string>()),Is.Not.Empty);
+        Assert.That(await _questionService.GetQuestions(1,"easy",new List<int>()),Is.Not.Empty);
     }
 }

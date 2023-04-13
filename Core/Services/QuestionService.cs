@@ -14,21 +14,24 @@ public class QuestionService : IQuestionService
    
    public async Task<List<Difficulty>> GetDifficulties()
    {
-      return new List<Difficulty>();
+      return await _questionRepository.GetDifficulties();
    }
 
    public async Task<List<Category>> GetCategories()
    {
-      return new List<Category>();
+      return await _questionRepository.GetCategories();
    }
 
    public async Task<List<Tag>> GetTags(int? categoryId, string? difficultyId)
    {
-      return new List<Tag>();
+      return await _questionRepository.GetTags(categoryId, difficultyId);
    }
 
-   public async Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<string> tags)
+   public async Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<int> tagIds)
    {
-      return new List<Question>();
+      if (categoryId.Equals(0) || string.IsNullOrWhiteSpace(difficultyId))
+         throw new ArgumentException("Invalid arguments");
+      
+      return await _questionRepository.GetQuestions(categoryId, difficultyId, tagIds);
    }
 }
