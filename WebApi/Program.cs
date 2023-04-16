@@ -16,7 +16,7 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
     .ReadFrom.Services(services)
     .Enrich.FromLogContext()
-    .WriteTo.File("/var/logs/devlab-api/logs.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("/var/log/devlab-api/logs.txt", rollingInterval: RollingInterval.Day)
     .MinimumLevel.Information());
 
 builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
