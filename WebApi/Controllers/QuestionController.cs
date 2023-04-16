@@ -16,6 +16,21 @@ namespace devlab_api.Controllers
             _questionService = questionService;
         }
         
+        [HttpGet]
+        public async Task<IActionResult> GetQuestions(int category, int difficulty, string? tags)
+        {
+            try
+            {
+                List<int> tagIds = string.IsNullOrWhiteSpace(tags) ? new() : tags.Split(",").Select(t => Convert.ToInt32(t)).ToList();
+                return Ok(await _questionService.GetQuestions(category,difficulty,tagIds));
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Exception thrown at QuestionController:GetQuestions, Message: {0}",e.Message);
+                return BadRequest();
+            }
+        }
+        
         [HttpGet("difficulties")]
         public async Task<IActionResult> GetDifficulties()
         {
@@ -58,19 +73,5 @@ namespace devlab_api.Controllers
             }
         }
         
-        [HttpGet("questions")]
-        public async Task<IActionResult> GetQuestions(int category, string difficulty, string tags)
-        {
-            try
-            {
-                List<int> tagIds = string.IsNullOrWhiteSpace(tags) ? new() : tags.Split(",").Select(t => Convert.ToInt32(t)).ToList();
-                return Ok(await _questionService.GetQuestions(category,difficulty,tagIds));
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Exception thrown at QuestionController:GetQuestions, Message: {0}",e.Message);
-                return BadRequest();
-            }
-        }
     }
 }

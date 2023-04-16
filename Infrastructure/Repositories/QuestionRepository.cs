@@ -28,12 +28,12 @@ public class QuestionRepository : IQuestionRepository
         return new List<Tag>();
     }
 
-    public async Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<int> tagIds)
+    public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, List<int> tagIds)
     {
         return await _context.Questions
-            .Include(q => q.Difficulty)
-            .Include(q => q.Category)
-            .Include(q => q.Tags)
+            .Include(q=>q.Category)
+            .Include(q=>q.Difficulty)
+            .AsNoTracking()
             .Where(q => 
                 q.Category.Id.Equals(categoryId) && 
                 q.Difficulty.Id.Equals(difficultyId) &&

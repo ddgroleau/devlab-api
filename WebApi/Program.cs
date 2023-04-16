@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Core.RepositoryInterfaces;
 using Core.Services;
 using Core.Utility;
@@ -18,7 +19,7 @@ builder.Host.UseSerilog((context, services, configuration) => configuration
     .WriteTo.File("/var/logs/devlab-api/logs.txt", rollingInterval: RollingInterval.Day)
     .MinimumLevel.Information());
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();

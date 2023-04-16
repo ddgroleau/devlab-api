@@ -27,9 +27,9 @@ public class QuestionService : IQuestionService
       return await _questionRepository.GetTags(categoryId, difficultyId);
    }
 
-   public async Task<List<Question>> GetQuestions(int categoryId, string difficultyId, List<int> tagIds)
+   public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, List<int> tagIds)
    {
-      if (categoryId.Equals(0) || string.IsNullOrWhiteSpace(difficultyId))
+      if (categoryId.Equals(0) || difficultyId.Equals(0))
          throw new ArgumentException("Invalid arguments");
       
       return await _questionRepository.GetQuestions(categoryId, difficultyId, tagIds);
