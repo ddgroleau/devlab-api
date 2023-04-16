@@ -6,7 +6,7 @@ A simple REST API for the DevLab question & answer game.
 [MIT](https://choosealicense.com/licenses/mit/)
 
 # Open API Documentation
-``🔥 Last Updated: Sun Apr 16 16:12:23 UTC 2023``
+``🔥 Last Updated: Sun Apr 16 22:08:44 UTC 2023``
 
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
@@ -136,6 +136,7 @@ func main() {
 |---|---|---|---|---|
 |category|query|integer(int32)|false|none|
 |difficulty|query|integer(int32)|false|none|
+|questionCount|query|integer(int32)|false|none|
 |tags|query|string|false|none|
 
 <h3 id="get__api_questions-responses">Responses</h3>

@@ -60,16 +60,16 @@ public class QuestionControllerTests
     [Test]
     public async Task GetQuestions_WithInvalidArguments_ReturnsBadRequest()
     {
-        _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<List<int>>())
+        _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(),Arg.Any<List<int>>())
             .ThrowsAsync(new ArgumentException());
-        Assert.That(((BadRequestResult) await _questionController.GetQuestions(0,0,null)).StatusCode,Is.EqualTo(400));
+        Assert.That(((BadRequestResult) await _questionController.GetQuestions(0,0,0,null)).StatusCode,Is.EqualTo(400));
     }
     
     [Test]
     public async Task GetQuestions_WithValidArguments_ReturnsOk()
     {
-        _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<List<int>>())
+        _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(),Arg.Any<List<int>>())
             .Returns(Task.FromResult(new List<Question>()));
-        Assert.That(((OkObjectResult) await _questionController.GetQuestions(1,1,"1")).StatusCode,Is.EqualTo(200));
+        Assert.That(((OkObjectResult) await _questionController.GetQuestions(1,1,1,"1")).StatusCode,Is.EqualTo(200));
     }
 }

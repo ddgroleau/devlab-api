@@ -1,3 +1,5 @@
+using System.Net.Http.Json;
+using Core.Domain.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Tests.E2E;
@@ -20,5 +22,14 @@ public class WebApiTests
     {
         HttpResponseMessage actual = await _testClient.GetAsync("/health");
         Assert.That((int)actual.StatusCode, Is.EqualTo(200));
+    }
+    
+    [Test]
+    public async Task GetQuestions_ReturnsQuestions()
+    {
+        HttpResponseMessage response = await _testClient.GetAsync("/api/questions?category=1&difficulty=3&questionCount=20&tags=");
+        List<Question>? actualQuestions =  await response.Content.ReadFromJsonAsync<List<Question>>();
+        Assert.That(actualQuestions, Is.Not.Null);
+        Assert.That(actualQuestions, Is.Not.Empty);
     }
 }

@@ -27,11 +27,11 @@ public class QuestionService : IQuestionService
       return await _questionRepository.GetTags(categoryId, difficultyId);
    }
 
-   public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, List<int> tagIds)
+   public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
    {
-      if (categoryId.Equals(0) || difficultyId.Equals(0))
+      if (categoryId.Equals(0) || difficultyId.Equals(0) || questionCount.Equals(0))
          throw new ArgumentException("Invalid arguments");
       
-      return await _questionRepository.GetQuestions(categoryId, difficultyId, tagIds);
+      return await _questionRepository.GetQuestions(categoryId, difficultyId, questionCount, tagIds);
    }
 }

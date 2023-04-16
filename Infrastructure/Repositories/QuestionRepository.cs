@@ -28,7 +28,7 @@ public class QuestionRepository : IQuestionRepository
         return new List<Tag>();
     }
 
-    public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, List<int> tagIds)
+    public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
     {
         return await _context.Questions
             .Include(q=>q.Category)
@@ -39,6 +39,7 @@ public class QuestionRepository : IQuestionRepository
                 q.Difficulty.Id.Equals(difficultyId) &&
                 (!tagIds.Any() || q.Tags.All(t => tagIds.Contains(t.Id)))
                 )
+            .Take(questionCount)
             .ToListAsync();
     }
 }

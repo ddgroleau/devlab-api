@@ -28,5 +28,5 @@ public class QuestionRepositoryTests
     [TestCase(1,0,"1")]
     [TestCase(1,1,"0")]
     public async Task GetQuestions_WithInvalidArguments_ReturnsEmptyCategoriesList(int categoryId, int difficultyId,string tags) =>
-        Assert.That(await _questionRepository.GetQuestions(categoryId,difficultyId,tags.Split(",").Select(t=>Convert.ToInt32(t)).ToList()), Is.Empty);
+        Assert.That(await _questionRepository.GetQuestions(categoryId,difficultyId,1,tags.Split(",").Select(t=>Convert.ToInt32(t)).ToList()), Is.Empty);
 }

@@ -130,6 +130,7 @@ func main() {
 |---|---|---|---|---|
 |category|query|integer(int32)|false|none|
 |difficulty|query|integer(int32)|false|none|
+|questionCount|query|integer(int32)|false|none|
 |tags|query|string|false|none|
 
 <h3 id="get__api_questions-responses">Responses</h3>
