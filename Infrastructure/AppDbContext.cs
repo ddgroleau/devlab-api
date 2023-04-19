@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
 {
     public AppDbContext()
     {
+        Database.EnsureDeleted();
         Database.Migrate();
 
         SeedData.CreatePlPgSqlProcedure_InsertQuestion(Database);
