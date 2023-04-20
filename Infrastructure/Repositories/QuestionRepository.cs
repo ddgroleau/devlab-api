@@ -11,7 +11,6 @@ public class QuestionRepository : IQuestionRepository
     public QuestionRepository(AppDbContext context)
     {
         _context = context;
-        _context.Database.Migrate();
     }
     
     public async Task<List<Difficulty>> GetDifficulties()

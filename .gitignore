@@ -5,6 +5,7 @@ riderModule.iml
 /_ReSharper.Caches/
 run.sh
 run-docker.sh
+run-docker.ps1
 
 .env
 .vs
