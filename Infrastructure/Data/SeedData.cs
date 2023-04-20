@@ -93,7 +93,6 @@ public static class SeedData
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
             return 0;
         }
     }
@@ -135,7 +134,6 @@ public static class SeedData
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
             return 0;
         }
     }

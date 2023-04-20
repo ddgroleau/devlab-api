@@ -10,7 +10,6 @@ public class AppDbContext : DbContext
 {
     public AppDbContext()
     {
-        Console.WriteLine("Running DB Migrations");
         Database.Migrate();
 
         SeedData.CreatePlPgSqlProcedure_InsertQuestion(Database);
