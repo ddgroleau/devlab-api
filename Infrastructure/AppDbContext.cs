@@ -17,7 +17,13 @@ public class AppDbContext : DbContext
     }
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
-    : base(options) { }
+        : base(options)
+    {
+        Database.Migrate();
+
+        SeedData.CreatePlPgSqlProcedure_InsertQuestion(Database);
+        SeedData.SeedQuestions(Database);
+    }
     
     public DbSet<Question> Questions { get; set; }
     public DbSet<Category> Categories { get; set; }

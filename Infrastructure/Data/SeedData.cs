@@ -94,7 +94,6 @@ public static class SeedData
         }
         catch (Exception e)
         {
-            new LoggerFactory().CreateLogger<ILogger<AppDbContext>>().LogError(e.Message);
             return 0;
         }
     }
@@ -136,7 +135,6 @@ public static class SeedData
         }
         catch (Exception e)
         {
-            new LoggerFactory().CreateLogger<ILogger<AppDbContext>>().LogError(e.Message);
             return 0;
         }
     }
