@@ -2,6 +2,7 @@ using Core.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data;
 
@@ -93,7 +94,7 @@ public static class SeedData
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            new LoggerFactory().CreateLogger<ILogger<AppDbContext>>().LogError(e.Message);
             return 0;
         }
     }
@@ -135,7 +136,7 @@ public static class SeedData
         }
         catch (Exception e)
         {
-            Console.WriteLine(e.Message);
+            new LoggerFactory().CreateLogger<ILogger<AppDbContext>>().LogError(e.Message);
             return 0;
         }
     }
