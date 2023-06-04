@@ -21,7 +21,7 @@ namespace devlab_api.Controllers
         {
             try
             {
-                List<int> tagIds = string.IsNullOrWhiteSpace(tags) ? new() : tags.Split(",").Select(t => Convert.ToInt32(t)).ToList();
+                var tagIds = string.IsNullOrWhiteSpace(tags) ? new() : tags.Split(",").Select(t => Convert.ToInt32(t)).ToList();
                 return Ok(await _questionService.GetQuestions(category,difficulty, questionCount, tagIds));
             }
             catch (Exception e)

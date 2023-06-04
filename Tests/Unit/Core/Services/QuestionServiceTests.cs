@@ -21,14 +21,14 @@ public class QuestionServiceTests
     [Test]
     public async Task GetDifficulties_ReturnsDifficulties()
     {
-        _questionRepository.GetDifficulties().Returns(Task.FromResult(new List<Difficulty> { new Difficulty() }));
+        _questionRepository.GetDifficulties().Returns(Task.FromResult(new List<Difficulty> { new Difficulty() }.AsEnumerable()));
         Assert.That(await _questionService.GetDifficulties(), Is.Not.Empty);
     }
     
     [Test]
     public async Task GetCategories_ReturnsCategories()
     { 
-        _questionRepository.GetCategories().Returns(Task.FromResult(new List<Category> { new Category() }));
+        _questionRepository.GetCategories().Returns(Task.FromResult(new List<Category> { new Category() }.AsEnumerable()));
         Assert.That(await _questionService.GetCategories(), Is.Not.Empty);
     }
 
@@ -43,7 +43,7 @@ public class QuestionServiceTests
     public async Task GetQuestions_WithValidArguments_ReturnsList()
     {
         _questionRepository.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<List<int>>())
-            .Returns(Task.FromResult(new List<Question> { new Question() }));
+            .Returns(Task.FromResult(new List<Question> { new Question() }.AsEnumerable()));
         Assert.That(await _questionService.GetQuestions(1,1,1, new List<int>()),Is.Not.Empty);
     }
 }

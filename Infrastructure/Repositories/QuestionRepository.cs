@@ -13,22 +13,22 @@ public class QuestionRepository : IQuestionRepository
         _context = context;
     }
     
-    public async Task<List<Difficulty>> GetDifficulties()
+    public async Task<IEnumerable<Difficulty>> GetDifficulties()
     {
         return await _context.Difficulties.ToListAsync();
     }
 
-    public async Task<List<Category>> GetCategories()
+    public async Task<IEnumerable<Category>> GetCategories()
     {
         return await _context.Categories.ToListAsync();
     }
 
-    public async Task<List<Tag>> GetTags(int? categoryId, string? difficultyId)
+    public async Task<IEnumerable<Tag>> GetTags(int? categoryId, string? difficultyId)
     {
         return new List<Tag>();
     }
 
-    public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
+    public async Task<IEnumerable<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
     {
         return await _context.Questions
             .Include(q=>q.Category)

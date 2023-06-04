@@ -4,9 +4,24 @@ using Core.Services;
 using Core.Utility;
 using Infrastructure;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Serilog;
 
+var _origins = "_origins";
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: _origins,
+        policy  =>
+        {
+            policy.WithOrigins("http://localhost:3000","https://*.fullstackdan.com")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowedToAllowWildcardSubdomains();
+        });
+});
 
 AppConfig.AddAppSettings(builder.Configuration);
 
@@ -36,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(_origins);
 
 app.UseHttpsRedirection();
 

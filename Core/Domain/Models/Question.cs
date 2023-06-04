@@ -4,7 +4,7 @@ public class Question : Permutable
 {
     public int Id { get; set; }
     public string QuestionText { get; set; }
-    public List<string> AnswerOptions { get; set; }
+    public string[] AnswerOptions { get; set; }
     public string CorrectAnswer { get; set; }
     public int DifficultyId { get; set; }
     public int CategoryId { get; set; }
@@ -14,10 +14,10 @@ public class Question : Permutable
     public Question()
     {
         QuestionText = "";
-        AnswerOptions = new();
+        AnswerOptions = Array.Empty<string>();
         CorrectAnswer = "";
-        Difficulty = new();
-        Category = new();
+        Difficulty = null!;
+        Category = null!;
         Tags = new List<Tag>();
     }
 }

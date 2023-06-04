@@ -4,11 +4,11 @@ namespace Core.RepositoryInterfaces;
 
 public interface IQuestionRepository
 {
-    Task<List<Difficulty>> GetDifficulties();
+    Task<IEnumerable<Difficulty>> GetDifficulties();
 
-    Task<List<Category>> GetCategories();
+    Task<IEnumerable<Category>> GetCategories();
 
-    Task<List<Tag>> GetTags(int? categoryId, string? difficultyId);
+    Task<IEnumerable<Tag>> GetTags(int? categoryId, string? difficultyId);
 
-    Task<List<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds);
+    Task<IEnumerable<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds);
 }

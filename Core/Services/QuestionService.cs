@@ -12,22 +12,22 @@ public class QuestionService : IQuestionService
       _questionRepository = questionRepository;
    }
    
-   public async Task<List<Difficulty>> GetDifficulties()
+   public async Task<IEnumerable<Difficulty>> GetDifficulties()
    {
       return await _questionRepository.GetDifficulties();
    }
 
-   public async Task<List<Category>> GetCategories()
+   public async Task<IEnumerable<Category>> GetCategories()
    {
       return await _questionRepository.GetCategories();
    }
 
-   public async Task<List<Tag>> GetTags(int? categoryId, string? difficultyId)
+   public async Task<IEnumerable<Tag>> GetTags(int? categoryId, string? difficultyId)
    {
       return await _questionRepository.GetTags(categoryId, difficultyId);
    }
 
-   public async Task<List<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
+   public async Task<IEnumerable<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
    {
       if (categoryId.Equals(0) || difficultyId.Equals(0) || questionCount.Equals(0))
          throw new ArgumentException("Invalid arguments");

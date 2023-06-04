@@ -29,7 +29,7 @@ public class QuestionControllerTests
     {
         List<Difficulty> mockDifficulties =
             isEmpty ? new List<Difficulty>() : new List<Difficulty> { new Difficulty() };
-        _questionService.GetDifficulties().Returns(Task.FromResult(mockDifficulties));
+        _questionService.GetDifficulties().Returns(Task.FromResult(mockDifficulties.AsEnumerable()));
         Assert.That(((OkObjectResult) await _questionController.GetDifficulties()).StatusCode,Is.EqualTo(200));
     }
     
@@ -46,7 +46,7 @@ public class QuestionControllerTests
     {
         List<Category> mockCategories =
             isEmpty ? new List<Category>() : new List<Category> { new Category() };
-        _questionService.GetCategories().Returns(Task.FromResult(mockCategories));
+        _questionService.GetCategories().Returns(Task.FromResult(mockCategories.AsEnumerable()));
         Assert.That(((OkObjectResult) await _questionController.GetCategories()).StatusCode,Is.EqualTo(200));
     }
     
@@ -69,7 +69,7 @@ public class QuestionControllerTests
     public async Task GetQuestions_WithValidArguments_ReturnsOk()
     {
         _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(),Arg.Any<List<int>>())
-            .Returns(Task.FromResult(new List<Question>()));
+            .Returns(Task.FromResult(new List<Question>().AsEnumerable()));
         Assert.That(((OkObjectResult) await _questionController.GetQuestions(1,1,1,"1")).StatusCode,Is.EqualTo(200));
     }
 }
