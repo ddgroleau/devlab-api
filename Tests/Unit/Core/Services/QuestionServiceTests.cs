@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Models;
 using Core.RepositoryInterfaces;
 using Core.Services;
+using Core.Utility;
 using NSubstitute;
 
 namespace Tests.Unit.Core.Services;
@@ -37,7 +38,7 @@ public class QuestionServiceTests
     [TestCase(1,1,0, "1")]
     public void GetQuestions_WithInvalidArguments_ReturnsEmptyCategoriesList(int categoryId, int difficultyId, int questionCount,
         string tags) =>
-        Assert.ThrowsAsync<ArgumentException>(async ()=> await _questionService.GetQuestions(categoryId, difficultyId,questionCount, tags.Split(",").Select(t=>int.Parse(t)).ToList()));
+        Assert.ThrowsAsync<BusinessException>(async ()=> await _questionService.GetQuestions(categoryId, difficultyId,questionCount, tags.Split(",").Select(t=>int.Parse(t)).ToList()));
     
     [Test]
     public async Task GetQuestions_WithValidArguments_ReturnsList()

@@ -1,15 +1,16 @@
+using System.Net.Mime;
 using System.Text.Json.Serialization;
 using Core.RepositoryInterfaces;
 using Core.Services;
 using Core.Utility;
 using Infrastructure;
 using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Diagnostics;
 using Serilog;
+using Serilog.Core;
 
 var _origins = "_origins";
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddCors(options =>
 {
@@ -54,11 +55,37 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(_origins);
 
-app.UseHttpsRedirection();
+app.UseExceptionHandler(exceptionHandlerApp =>
+{
+    exceptionHandlerApp.Run(async context =>
+    {
+        context.Response.ContentType = MediaTypeNames.Text.Plain;
+
+        var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
+        var error = exceptionHandlerPathFeature?.Error;
+        
+        new LoggerConfiguration().CreateLogger().Error(error,
+            "Exception thrown at {0}, Message: {1}",
+            context.Request.Path + context.Request.QueryString, 
+            error.Message);
+
+        if (exceptionHandlerPathFeature?.Error is BusinessException)
+        {
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsync(error.Message);
+        }
+        else
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            await context.Response.WriteAsync("An error occurred. Please try again.");
+        }
+    });
+});
 
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.MapHealthChecks("/health");
 
 app.UseSerilogRequestLogging();

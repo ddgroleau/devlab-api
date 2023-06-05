@@ -32,13 +32,6 @@ public class QuestionControllerTests
         _questionService.GetDifficulties().Returns(Task.FromResult(mockDifficulties.AsEnumerable()));
         Assert.That(((OkObjectResult) await _questionController.GetDifficulties()).StatusCode,Is.EqualTo(200));
     }
-    
-    [Test]
-    public async Task GetDifficulties_WithException_ReturnsBadRequest()
-    {
-        _questionService.GetDifficulties().ThrowsAsync(new Exception());
-        Assert.That(((BadRequestResult) await _questionController.GetDifficulties()).StatusCode,Is.EqualTo(400));
-    }
 
     [TestCase(true)]
     [TestCase(false)]
@@ -51,22 +44,7 @@ public class QuestionControllerTests
     }
     
     [Test]
-    public async Task GetCategories_WithException_ReturnsBadRequest()
-    {
-        _questionService.GetCategories().ThrowsAsync(new Exception());
-        Assert.That(((BadRequestResult) await _questionController.GetCategories()).StatusCode,Is.EqualTo(400));
-    }
-
-    [Test]
-    public async Task GetQuestions_WithInvalidArguments_ReturnsBadRequest()
-    {
-        _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(),Arg.Any<List<int>>())
-            .ThrowsAsync(new ArgumentException());
-        Assert.That(((BadRequestResult) await _questionController.GetQuestions(0,0,0,null)).StatusCode,Is.EqualTo(400));
-    }
-    
-    [Test]
-    public async Task GetQuestions_WithValidArguments_ReturnsOk()
+    public async Task GetQuestions_WithValidArguments_Returns200()
     {
         _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(),Arg.Any<List<int>>())
             .Returns(Task.FromResult(new List<Question>().AsEnumerable()));

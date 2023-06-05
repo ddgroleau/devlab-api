@@ -5,7 +5,6 @@ namespace Core.Services;
 public interface IQuestionService
 {
     Task<IEnumerable<Difficulty>> GetDifficulties();
-
     Task<IEnumerable<Category>> GetCategories();
 
     Task<IEnumerable<Tag>> GetTags(int? categoryId, string? difficultyId);

@@ -20,8 +20,8 @@ public class AppDbContext : DbContext
 
     private void ApplyMigrations()
     {
-        Database.EnsureDeleted();
-        Database.Migrate();
+        // Database.EnsureDeleted();
+        // Database.Migrate();
     }
     
     public DbSet<Question> Questions { get; set; }

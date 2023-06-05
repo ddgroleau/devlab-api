@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Models;
 using Core.RepositoryInterfaces;
+using Core.Utility;
 
 namespace Core.Services;
 
@@ -30,7 +31,7 @@ public class QuestionService : IQuestionService
    public async Task<IEnumerable<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
    {
       if (categoryId.Equals(0) || difficultyId.Equals(0) || questionCount.Equals(0))
-         throw new ArgumentException("Invalid arguments");
+         throw new BusinessException("Invalid question filters.");
       
       return await _questionRepository.GetQuestions(categoryId, difficultyId, questionCount, tagIds);
    }
