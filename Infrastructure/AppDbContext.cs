@@ -87,7 +87,5 @@ public class AppDbContext : DbContext
         var db = Environment.GetEnvironmentVariable("PG_DATABASE");
         
         options.UseNpgsql($"Host={host};Port={port};Username={user};Password={password};Database={db};");
-        options.EnableSensitiveDataLogging();
-        options.EnableDetailedErrors();
     }
 }

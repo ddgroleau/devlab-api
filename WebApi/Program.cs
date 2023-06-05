@@ -28,12 +28,19 @@ AppConfig.AddAppSettings(builder.Configuration);
 
 AppConfig.LoadEnv();
 
-builder.Host.UseSerilog((context, services, configuration) => configuration
-    .ReadFrom.Configuration(context.Configuration)
-    .ReadFrom.Services(services)
-    .Enrich.FromLogContext()
-    .WriteTo.File("/var/log/devlab-api/logs.txt", rollingInterval: RollingInterval.Day)
-    .MinimumLevel.Information());
+var logger = new LoggerConfiguration();
+
+builder.Host.UseSerilog((context, services, configuration) =>
+{
+    configuration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.File("/var/log/devlab-api/logs.txt", rollingInterval: RollingInterval.Day)
+        .MinimumLevel.Information();
+
+    logger = configuration;
+});
 
 builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddEndpointsApiExplorer();
@@ -64,7 +71,7 @@ app.UseExceptionHandler(exceptionHandlerApp =>
         var exceptionHandlerPathFeature = context.Features.Get<IExceptionHandlerPathFeature>();
         var error = exceptionHandlerPathFeature?.Error;
         
-        new LoggerConfiguration().CreateLogger().Error(error,
+        logger.CreateLogger().Error(error,
             "Exception thrown at {0}, Message: {1}",
             context.Request.Path + context.Request.QueryString, 
             error.Message);
