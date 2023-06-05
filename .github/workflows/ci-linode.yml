@@ -84,5 +84,9 @@ jobs:
             -e PG_PASSWORD="${envArray[4]}" \
             -e PG_DATABASE="${envArray[5]}" \
             dangroleau/devlab-api \
+            && docker container prune --force \
+            && docker network prune --force \
+            && docker image prune --force \
+            && docker volume prune --force \
             && exit \
             && exit 0;
