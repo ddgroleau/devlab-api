@@ -66,8 +66,7 @@ app.UseExceptionHandler(exceptionHandlerApp =>
         var error = exceptionHandlerPathFeature?.Error;
 
         var logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(app.Configuration)
-            .ReadFrom.Services(app.Services)
+            .ReadFrom.Configuration(builder.Configuration)
             .Enrich.FromLogContext()
             .WriteTo.File("/var/log/devlab-api/logs.txt", rollingInterval: RollingInterval.Day)
             .MinimumLevel.Information()
