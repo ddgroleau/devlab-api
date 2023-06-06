@@ -6,15 +6,15 @@ using Core.Utility;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Serilog.Core;
 
-var _origins = "_origins";
+var origins = "_origins";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: _origins,
+    options.AddPolicy(name: origins,
         policy  =>
         {
             policy.WithOrigins("http://localhost:3000","https://*.fullstackdan.com")
@@ -54,7 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(_origins);
+app.UseCors(origins);
 
 app.UseExceptionHandler(exceptionHandlerApp =>
 {
@@ -75,12 +75,12 @@ app.UseExceptionHandler(exceptionHandlerApp =>
             logger.Error(error,
             "Exception thrown at {0}, Message: {1}",
             context.Request.Path + context.Request.QueryString, 
-            error.Message);
+            error?.Message);
 
         if (exceptionHandlerPathFeature?.Error is BusinessException)
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await context.Response.WriteAsync(error.Message);
+            await context.Response.WriteAsync(error?.Message ?? "Bad Request");
         }
         else
         {
@@ -97,6 +97,13 @@ app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.UseSerilogRequestLogging();
+
+app.Use((_, next) =>
+{
+    using var context = new AppDbContext();
+    context.Database.Migrate();
+    return next();
+});
 
 app.Run();
 
