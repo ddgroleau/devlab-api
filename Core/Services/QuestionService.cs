@@ -23,16 +23,16 @@ public class QuestionService : IQuestionService
       return await _questionRepository.GetCategories();
    }
 
-   public async Task<IEnumerable<Tag>> GetTags(int? categoryId, string? difficultyId)
+   public async Task<IEnumerable<Tag>> GetTags(int[]? categoryIds, string? difficultyId)
    {
-      return await _questionRepository.GetTags(categoryId, difficultyId);
+      return await _questionRepository.GetTags(categoryIds, difficultyId);
    }
 
-   public async Task<IEnumerable<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
+   public async Task<IEnumerable<Question>> GetQuestions(IEnumerable<int> categoryIds, int difficultyId, int questionCount, IEnumerable<int> tagIds)
    {
-      if (categoryId.Equals(0) || difficultyId.Equals(0) || questionCount.Equals(0))
+      if (difficultyId.Equals(0) || questionCount.Equals(0))
          throw new BusinessException("Invalid question filters.");
       
-      return await _questionRepository.GetQuestions(categoryId, difficultyId, questionCount, tagIds);
+      return await _questionRepository.GetQuestions(categoryIds, difficultyId, questionCount, tagIds);
    }
 }

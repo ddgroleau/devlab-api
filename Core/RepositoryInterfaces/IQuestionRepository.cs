@@ -8,7 +8,7 @@ public interface IQuestionRepository
 
     Task<IEnumerable<Category>> GetCategories();
 
-    Task<IEnumerable<Tag>> GetTags(int? categoryId, string? difficultyId);
+    Task<IEnumerable<Tag>> GetTags(int[]? categoryIds, string? difficultyId);
 
-    Task<IEnumerable<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds);
+    Task<IEnumerable<Question>> GetQuestions(IEnumerable<int> categoryIds, int difficultyId, int questionCount, IEnumerable<int> tagIds);
 }

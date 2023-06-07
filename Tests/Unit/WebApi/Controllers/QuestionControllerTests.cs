@@ -1,4 +1,5 @@
-﻿using Core.Domain.Models;
+﻿using System.Collections;
+using Core.Domain.Models;
 using Core.Services;
 using devlab_api.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -46,8 +47,8 @@ public class QuestionControllerTests
     [Test]
     public async Task GetQuestions_WithValidArguments_Returns200()
     {
-        _questionService.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(),Arg.Any<List<int>>())
+        _questionService.GetQuestions(Arg.Any<IEnumerable<int>>(), Arg.Any<int>(), Arg.Any<int>(),Arg.Any<IEnumerable<int>>())
             .Returns(Task.FromResult(new List<Question>().AsEnumerable()));
-        Assert.That(((OkObjectResult) await _questionController.GetQuestions(1,1,1,"1")).StatusCode,Is.EqualTo(200));
+        Assert.That(((OkObjectResult) await _questionController.GetQuestions("1,2,3",1,1,"1")).StatusCode,Is.EqualTo(200));
     }
 }

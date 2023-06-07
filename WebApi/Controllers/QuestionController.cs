@@ -17,10 +17,11 @@ namespace devlab_api.Controllers
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetQuestions(int category, int difficulty, int questionCount, string? tags)
+        public async Task<IActionResult> GetQuestions(string categories, int difficulty, int questionCount, string? tags)
         {
-            var tagIds = string.IsNullOrWhiteSpace(tags) ? new() : tags.Split(",").Select(t => Convert.ToInt32(t)).ToList();
-            return Ok(await _questionService.GetQuestions(category,difficulty, questionCount, tagIds));
+            var tagIds = string.IsNullOrWhiteSpace(tags) ? Array.Empty<int>() : tags.Split(",").Select(t => Convert.ToInt32(t)).ToArray();
+            var categoryIds = string.IsNullOrWhiteSpace(categories) ? Array.Empty<int>() : categories.Split(",").Select(t => Convert.ToInt32(t)).ToArray();
+            return Ok(await _questionService.GetQuestions(categoryIds,difficulty, questionCount, tagIds));
         }
         
         [HttpGet("difficulties")]
@@ -36,9 +37,10 @@ namespace devlab_api.Controllers
         }
         
         [HttpGet("tags")]
-        public async Task<IActionResult> GetTags(int? categoryId, string? difficultyId)
+        public async Task<IActionResult> GetTags(string categories, string? difficultyId)
         {
-            return Ok(await _questionService.GetTags(categoryId,difficultyId));
+            var categoryIds = string.IsNullOrWhiteSpace(categories) ? Array.Empty<int>() : categories.Split(",").Select(t => Convert.ToInt32(t)).ToArray();
+            return Ok(await _questionService.GetTags(categoryIds,difficultyId));
         }
         
     }

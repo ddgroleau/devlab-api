@@ -23,23 +23,30 @@ public class QuestionRepository : IQuestionRepository
         return await _context.Categories.ToListAsync();
     }
 
-    public async Task<IEnumerable<Tag>> GetTags(int? categoryId, string? difficultyId)
+    public async Task<IEnumerable<Tag>> GetTags(int[]? categoryIds, string? difficultyId)
     {
-        return new List<Tag>();
+        return await Task.FromResult(Array.Empty<Tag>());
     }
 
-    public async Task<IEnumerable<Question>> GetQuestions(int categoryId, int difficultyId, int questionCount, List<int> tagIds)
+    public async Task<IEnumerable<Question>> GetQuestions(IEnumerable<int> categoryIds, int difficultyId, int questionCount, IEnumerable<int> tagIds)
     {
-        return await _context.Questions
-            .Include(q=>q.Category)
-            .Include(q=>q.Difficulty)
+        var questions = await _context.Questions
+            .Include(q => q.Category)
+            .Include(q => q.Difficulty)
             .AsNoTracking()
-            .Where(q => 
-                q.Category.Id.Equals(categoryId) && 
+            .Where(q =>
                 q.Difficulty.Id.Equals(difficultyId) &&
+                (!categoryIds.Any() || categoryIds.Contains(q.CategoryId)) &&
                 (!tagIds.Any() || q.Tags.All(t => tagIds.Contains(t.Id)))
-                )
+            )
+            .OrderBy(q => EF.Functions.Random())
             .Take(questionCount)
             .ToListAsync();
+            
+            return questions.Select(q =>
+            {
+                q.AnswerOptions = q.AnswerOptions.OrderBy(_ => new Random().Next()).ToArray();
+                return q;
+            });
     }
 }

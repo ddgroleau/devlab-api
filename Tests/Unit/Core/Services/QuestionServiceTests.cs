@@ -1,4 +1,5 @@
-﻿using Core.Domain.Models;
+﻿using System.Collections;
+using Core.Domain.Models;
 using Core.RepositoryInterfaces;
 using Core.Services;
 using Core.Utility;
@@ -33,18 +34,17 @@ public class QuestionServiceTests
         Assert.That(await _questionService.GetCategories(), Is.Not.Empty);
     }
 
-    [TestCase(0,1,1, "1")]
-    [TestCase(1,0,1, "1")]
-    [TestCase(1,1,0, "1")]
-    public void GetQuestions_WithInvalidArguments_ReturnsEmptyCategoriesList(int categoryId, int difficultyId, int questionCount,
+    [TestCase("1",0,1, "1")]
+    [TestCase("1",1,0, "1")]
+    public void GetQuestions_WithInvalidArguments_ReturnsEmptyCategoriesList(string categoryIds, int difficultyId, int questionCount,
         string tags) =>
-        Assert.ThrowsAsync<BusinessException>(async ()=> await _questionService.GetQuestions(categoryId, difficultyId,questionCount, tags.Split(",").Select(t=>int.Parse(t)).ToList()));
+        Assert.ThrowsAsync<BusinessException>(async ()=> await _questionService.GetQuestions(categoryIds.Split(",").Select(t=>int.Parse(t)).ToList(), difficultyId,questionCount, tags.Split(",").Select(t=>int.Parse(t)).ToList()));
     
     [Test]
     public async Task GetQuestions_WithValidArguments_ReturnsList()
     {
-        _questionRepository.GetQuestions(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<List<int>>())
+        _questionRepository.GetQuestions(Arg.Any<IEnumerable<int>>(), Arg.Any<int>(), Arg.Any<int>(), Arg.Any<List<int>>())
             .Returns(Task.FromResult(new List<Question> { new Question() }.AsEnumerable()));
-        Assert.That(await _questionService.GetQuestions(1,1,1, new List<int>()),Is.Not.Empty);
+        Assert.That(await _questionService.GetQuestions(new []{1,2,3},1,1, new List<int>()),Is.Not.Empty);
     }
 }

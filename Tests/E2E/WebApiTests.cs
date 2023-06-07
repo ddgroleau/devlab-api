@@ -27,7 +27,7 @@ public class WebApiTests
     [Test]
     public async Task GetQuestions_ReturnsQuestions()
     {
-        var response = await _testClient.GetAsync("/api/questions?category=1&difficulty=3&questionCount=20&tags=");
+        var response = await _testClient.GetAsync("/api/questions?categories=1,2,3&difficulty=3&questionCount=20&tags=");
         var actualQuestions =  await response.Content.ReadFromJsonAsync<List<Question>>();
         Assert.That(actualQuestions, Is.Not.Null);
         Assert.That(actualQuestions, Is.Not.Empty);
